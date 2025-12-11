@@ -1,8 +1,8 @@
 class Task:
     def __init__(self, description, priority="medium", due_date=None, category="general"):
         self.description = description
-        self.status = "Pending"  # Pending o Completed
-        self.priority = priority  # low, medium, high
+        self.status = "Pending"
+        self.priority = priority
         self.due_date = due_date
         self.category = category
 
@@ -30,3 +30,10 @@ class TodoList:
     
     def is_empty(self):
         return len(self.tasks) == 0
+    
+    def delete_task(self, task_description):
+        for task in self.tasks:
+            if task.description == task_description:
+                self.tasks.remove(task)
+                return True
+        return False
