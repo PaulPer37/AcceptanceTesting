@@ -1,11 +1,13 @@
 import sys
 
 class Task:
-    def __init__(self, name, priority="Media", category="General"):
-        # Cumpliendo el requisito de mínimo 4 atributos 
-        self.name = name
+
+    def __init__(self, description, priority="medium", due_date=None, category="general"):
+        self.description = description
         self.status = "Pending"
         self.priority = priority
+        self.due_date = due_date
+
         self.category = category
 
     def mark_completed(self):
@@ -36,34 +38,22 @@ class ToDoList:
     def mark_task_completed(self, name):
         # Funcionalidad sugerida 3: Marcar como completada [cite: 174]
         for task in self.tasks:
-            if task.name == name:
-                task.mark_completed()
-                return f"Tarea '{name}' marcada como completada."
-        return f"Tarea '{name}' no encontrada."
 
-    def clear_list(self):
-        # Funcionalidad sugerida 4: Limpiar lista [cite: 175]
-        self.tasks = []
-        return "Lista limpiada."
-
-    def delete_task(self, name):
-        # --- FUNCIONALIDAD EXTRA  ---
-        initial_count = len(self.tasks)
-        self.tasks = [t for t in self.tasks if t.name != name]
-        if len(self.tasks) < initial_count:
-            return f"Tarea '{name}' eliminada."
-        return f"Tarea '{name}' no encontrada."
-
-    def get_task(self, name):
-        # Helper para verificar estado en los tests
+            if task.description == task_description:
+                task.status = "Completed"
+                return True
+        return False
+    
+    def clear_all(self):
+        self.tasks.clear()
+    
+    def is_empty(self):
+        return len(self.tasks) == 0
+    
+    def delete_task(self, task_description):
         for task in self.tasks:
-            if task.name == name:
-                return task
-        return None
+            if task.description == task_description:
+                self.tasks.remove(task)
+                return True
+        return False
 
-# Bloque para ejecución manual si se desea probar sin Behave
-if __name__ == "__main__":
-    todo = ToDoList()
-    print("--- To-Do List Manager ---")
-    todo.add_task("Comprar leche")
-    print(todo.list_tasks())
